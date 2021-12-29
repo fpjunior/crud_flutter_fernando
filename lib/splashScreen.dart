@@ -3,58 +3,6 @@ import 'package:animations/animations.dart';
 import 'package:firebase_crud/main.dart';
 import 'package:flutter/material.dart';
 
-class MyCustomWidget extends StatefulWidget {
-  @override
-  _MyCustomWidgetState createState() => _MyCustomWidgetState();
-}
-
-class _MyCustomWidgetState extends State<MyCustomWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Text(
-              'Suppose this is an app in your Phone\'s Screen page.',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            OpenContainer(
-              closedBuilder: (_, openContainer) {
-                return Container(
-                  height: 80,
-                  width: 80,
-                  child: Center(
-                    child: Text(
-                      'App Logo',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                );
-              },
-              openColor: Colors.white,
-              closedElevation: 20,
-              closedShape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              transitionDuration: Duration(milliseconds: 700),
-              openBuilder: (_, closeContainer) {
-                return SecondScreen();
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class SecondScreen extends StatefulWidget {
   @override
   _SecondScreenState createState() => _SecondScreenState();
