@@ -1,20 +1,35 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crud/add.dart';
 import 'package:firebase_crud/database.dart';
+import 'package:firebase_crud/splashScreen.dart';
 import 'package:firebase_crud/view.dart';
+import 'package:firebase_crud/view2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
+// void main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   Future<FirebaseApp> app = Firebase.initializeApp();
+
+//   if (app == null) {
+//     app = Firebase.initializeApp();
+//     await Firebase.initializeApp(
+//       // Replace with actual values
+//       options: FirebaseOptions(
+//         apiKey: "XXX",
+//         appId: "1:634861432791:android:f4a163ea4b78e16ebf2592",
+//         messagingSenderId: "XXX",
+//         projectId: "crud-27136",
+//       ),
+//     );
+//   } else {
+//     app; // if already initialized, use that one
+//   }
+//   runApp(MyApp());
+// }
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    // Replace with actual values
-    options: FirebaseOptions(
-      apiKey: "XXX",
-      appId: "1:634861432791:android:f4a163ea4b78e16ebf2592",
-      messagingSenderId: "XXX",
-      projectId: "crud-27136",
-    ),
-  );
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -28,7 +43,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyCustomWidget(),
     );
   }
 }
@@ -123,6 +138,57 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Cadastrar um novo produto',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class SlideAnimation3 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    double _w = MediaQuery.of(context).size.width;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Go Back"),
+        centerTitle: true,
+        brightness: Brightness.dark,
+      ),
+      body: AnimationLimiter(
+        child: ListView.builder(
+          padding: EdgeInsets.all(_w / 30),
+          physics:
+              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+          itemCount: 20,
+          itemBuilder: (BuildContext context, int index) {
+            return AnimationConfiguration.staggeredList(
+              position: index,
+              delay: Duration(milliseconds: 100),
+              child: SlideAnimation(
+                duration: Duration(milliseconds: 2500),
+                curve: Curves.fastLinearToSlowEaseIn,
+                child: FadeInAnimation(
+                  curve: Curves.fastLinearToSlowEaseIn,
+                  duration: Duration(milliseconds: 2500),
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: _w / 20),
+                    height: _w / 4,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 40,
+                          spreadRadius: 10,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }
