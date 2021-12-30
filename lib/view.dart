@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'database.dart';
 
@@ -17,6 +19,8 @@ class _ViewState extends State<View> {
   TextEditingController descriptionController = new TextEditingController();
   TextEditingController urlImageController = new TextEditingController();
   TextEditingController precoController = new TextEditingController();
+
+  bool isEditar = true;
   @override
   void initState() {
     super.initState();
@@ -40,6 +44,13 @@ class _ViewState extends State<View> {
               onPressed: () {
                 widget.db.delete(widget.produtos["id"]);
                 Navigator.pop(context, true);
+              }),
+          IconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () {
+                setState(() {
+                  isEditar = !isEditar;
+                });
               })
         ],
       ),
@@ -53,54 +64,107 @@ class _ViewState extends State<View> {
                 width: 300,
                 fit: BoxFit.cover,
               ),
-              TextField(
-                // readOnly: true,
-                style: TextStyle(color: Colors.white),
-
-                controller: nameController,
-                decoration: InputDecoration(
-                    labelText: "Nome",
-                    labelStyle: TextStyle(
-                      color: Color(0xffA9DED8),
-                    )),
+              SizedBox(
+                height: 20,
               ),
-              TextField(
-                style: TextStyle(color: Colors.white),
-                // readOnly: true,
-                controller: descriptionController,
-                decoration: InputDecoration(
-                    labelText: "Descrição",
-                    labelStyle: TextStyle(
-                      color: Color(0xffA9DED8),
-                    )),
+              isEditar == false
+                  ? TextField(
+                      readOnly: isEditar,
+                      style: TextStyle(color: Colors.white),
+                      controller: nameController,
+                      decoration: InputDecoration(
+                          labelText: "Nome",
+                          labelStyle: TextStyle(
+                            color: Color(0xffA9DED8),
+                          )),
+                    )
+                  : Text(
+                      widget.produtos["name"],
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
+                    ),
+              SizedBox(
+                height: 20,
               ),
-              TextField(
-                // readOnly: true,
-                style: TextStyle(color: Colors.white),
-
-                controller: urlImageController,
-                decoration: InputDecoration(
-                    labelText: "Url da imagem",
-                    labelStyle: TextStyle(
-                      color: Color(0xffA9DED8),
-                    )),
+              isEditar == false
+                  ? TextField(
+                      readOnly: isEditar,
+                      style: TextStyle(color: Colors.white),
+                      controller: descriptionController,
+                      decoration: InputDecoration(
+                          labelText: "Descrição",
+                          labelStyle: TextStyle(
+                            color: Color(0xffA9DED8),
+                          )),
+                    )
+                  : Text(
+                      descriptionController.text,
+                      style: TextStyle(color: Colors.white),
+                    ),
+              SizedBox(
+                height: 20,
               ),
-              TextField(
-                style: TextStyle(color: Colors.white),
-
-                // readOnly: true,
-                controller: precoController,
-                decoration: InputDecoration(
-                    labelText: "Preço",
-                    labelStyle: TextStyle(
-                      color: Color(0xffA9DED8),
-                    )),
+              isEditar == false
+                  ? TextField(
+                      readOnly: isEditar,
+                      style: TextStyle(color: Colors.white),
+                      controller: urlImageController,
+                      decoration: InputDecoration(
+                          labelText: "Url da Imagem",
+                          labelStyle: TextStyle(
+                            color: Color(0xffA9DED8),
+                          )),
+                    )
+                  : Container(
+                      alignment: Alignment.topLeft,
+                      child: RichText(
+                        text: TextSpan(
+                          text: "Link: ",
+                          style: TextStyle(color: Colors.white),
+                          children: [
+                            TextSpan(
+                              text: 'Abrir Imagem',
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  color: Colors.blue),
+                              recognizer: new TapGestureRecognizer()
+                                ..onTap = () {
+                                  launch(widget.produtos["urlImage"]);
+                                },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+              SizedBox(
+                height: 20,
               ),
+              isEditar == false
+                  ? TextField(
+                      style: TextStyle(color: Colors.white),
+                      readOnly: isEditar,
+                      controller: precoController,
+                      decoration: InputDecoration(
+                          labelText: "Média de Preço",
+                          labelStyle: TextStyle(
+                            color: Color(0xffA9DED8),
+                          )),
+                    )
+                  : Container(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
+                        'Média de Preço: ${precoController.text}',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
             ],
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: "btn1",
         onPressed: () {
           widget.db.update(
               widget.produtos['id'],

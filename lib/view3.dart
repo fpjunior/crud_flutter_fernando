@@ -67,6 +67,10 @@ class _MyCustomLoginUIState extends State<MyCustomLoginUI>
     double _width = MediaQuery.of(context).size.width;
     double _height = MediaQuery.of(context).size.height;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color.fromRGBO(56, 75, 49, 1.0),
+        title: Text("Cadastrar Produto"),
+      ),
       backgroundColor: Color(0xff292C31),
       body: ScrollConfiguration(
         behavior: MyBehavior(),
@@ -75,25 +79,26 @@ class _MyCustomLoginUIState extends State<MyCustomLoginUI>
             height: _height,
             child: Column(
               children: [
-                Expanded(child: SizedBox()),
+                // Expanded(child: SizedBox()),
                 Expanded(
-                  flex: 4,
+                  flex: 3,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       // SizedBox(),
-                      Text(
-                        'CADASTRAR PRODUTO',
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xffA9DED8),
-                        ),
-                      ),
+                      // Text(
+                      //   'CADASTRAR PRODUTO',
+                      //   style: TextStyle(
+                      //     fontSize: 25,
+                      //     fontWeight: FontWeight.w600,
+                      //     color: Color(0xffA9DED8),
+                      //   ),
+                      // ),
                       SizedBox(),
                       component1('Nome...', nameController),
                       component1('Descrição...', descriptionController),
                       component1('Url...', urlImageController),
+                      component1('Média de Preço...', precoController),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -147,7 +152,7 @@ class _MyCustomLoginUIState extends State<MyCustomLoginUI>
                             },
                             child: Container(
                               height: _width * .3,
-                              width: _width * .8,
+                              // width: _width * .8,
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                 color: Color(0xffA9DED8),

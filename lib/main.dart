@@ -85,6 +85,29 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(56, 75, 49, 1.0),
         title: Center(child: Text("Lista de Produtos")),
+        actions: [
+          Container(
+            margin: EdgeInsets.only(right: 10),
+            child: SizedBox(
+              width: 40,
+              child: FloatingActionButton(
+                onPressed: () {
+                  Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MyCustomLoginUI(db: db)))
+                      .then((value) {
+                    if (value != null) {
+                      initialise();
+                    }
+                  });
+                },
+                tooltip: 'Cadastrar um novo produto',
+                child: Icon(Icons.add),
+              ),
+            ),
+          ), // This t
+        ],
       ),
       body: ListView.builder(
         itemCount: docs.length,
@@ -135,20 +158,20 @@ class _MyHomePageState extends State<MyHomePage> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => MyCustomLoginUI(db: db))).then((value) {
-            if (value != null) {
-              initialise();
-            }
-          });
-        },
-        tooltip: 'Cadastrar um novo produto',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Navigator.push(
+      //         context,
+      //         MaterialPageRoute(
+      //             builder: (context) => MyCustomLoginUI(db: db))).then((value) {
+      //       if (value != null) {
+      //         initialise();
+      //       }
+      //     });
+      //   },
+      //   tooltip: 'Cadastrar um novo produto',
+      //   child: Icon(Icons.add),
+      // ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
