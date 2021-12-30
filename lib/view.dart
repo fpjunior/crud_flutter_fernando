@@ -30,7 +30,7 @@ class _ViewState extends State<View> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(56, 75, 49, 1.0),
+      backgroundColor: Color(0xff292C31),
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(56, 75, 49, 1.0),
         title: Text("Editar Produto"),
@@ -43,40 +43,61 @@ class _ViewState extends State<View> {
               })
         ],
       ),
-      body: Container(
-        padding: EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Image.network(
-              widget.produtos["urlImage"],
-              width: 300,
-              fit: BoxFit.cover,
-            ),
-            TextField(
-              controller: nameController,
-              decoration: InputDecoration(
-                  labelText: "Nome",
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-            TextField(
-              controller: descriptionController,
-              decoration: InputDecoration(
-                  labelText: "Descrição",
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-            TextField(
-              controller: urlImageController,
-              decoration: InputDecoration(
-                  labelText: "Url da imagem",
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-            TextField(
-              controller: precoController,
-              decoration: InputDecoration(
-                  labelText: "Preço",
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ],
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            children: [
+              Image.network(
+                widget.produtos["urlImage"],
+                width: 300,
+                fit: BoxFit.cover,
+              ),
+              TextField(
+                // readOnly: true,
+                style: TextStyle(color: Colors.white),
+
+                controller: nameController,
+                decoration: InputDecoration(
+                    labelText: "Nome",
+                    labelStyle: TextStyle(
+                      color: Color(0xffA9DED8),
+                    )),
+              ),
+              TextField(
+                style: TextStyle(color: Colors.white),
+                // readOnly: true,
+                controller: descriptionController,
+                decoration: InputDecoration(
+                    labelText: "Descrição",
+                    labelStyle: TextStyle(
+                      color: Color(0xffA9DED8),
+                    )),
+              ),
+              TextField(
+                // readOnly: true,
+                style: TextStyle(color: Colors.white),
+
+                controller: urlImageController,
+                decoration: InputDecoration(
+                    labelText: "Url da imagem",
+                    labelStyle: TextStyle(
+                      color: Color(0xffA9DED8),
+                    )),
+              ),
+              TextField(
+                style: TextStyle(color: Colors.white),
+
+                // readOnly: true,
+                controller: precoController,
+                decoration: InputDecoration(
+                    labelText: "Preço",
+                    labelStyle: TextStyle(
+                      color: Color(0xffA9DED8),
+                    )),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

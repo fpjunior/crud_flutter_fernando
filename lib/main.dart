@@ -4,6 +4,7 @@ import 'package:firebase_crud/database.dart';
 import 'package:firebase_crud/splashScreen.dart';
 import 'package:firebase_crud/view.dart';
 import 'package:firebase_crud/view2.dart';
+import 'package:firebase_crud/view3.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
@@ -80,6 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(56, 75, 49, 1.0),
+
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(56, 75, 49, 1.0),
         title: Center(child: Text("Lista de Produtos")),
@@ -87,12 +89,16 @@ class _MyHomePageState extends State<MyHomePage> {
       body: ListView.builder(
         itemCount: docs.length,
         itemBuilder: (BuildContext context, int index) {
-          return Card(
-            margin: EdgeInsets.all(10),
-            child: ListTile(
-              trailing: IconButton(
-                icon: Icon(Icons.visibility),
-                onPressed: () {
+          return new Container(
+            padding: new EdgeInsets.only(right: 13.0),
+            child: Card(
+              semanticContainer: true,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              elevation: 5,
+              color: Color(0xff292C31),
+              margin: EdgeInsets.all(10),
+              child: ListTile(
+                onTap: () {
                   Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -102,25 +108,29 @@ class _MyHomePageState extends State<MyHomePage> {
                             if (value != null) {initialise()}
                           });
                 },
+                contentPadding: EdgeInsets.only(right: 30, left: 36),
+                title: Text(
+                  docs[index]['name'],
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                  ),
+                ),
+                leading: Image.network(
+                  docs[index]['urlImage'],
+                  fit: BoxFit.cover,
+                  width: 70,
+                ),
+                subtitle: Text(
+                  docs[index]['description'],
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Color(0xffA9DED8),
+                  ),
+                ),
               ),
-              onTap: () {
-                Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                View(produtos: docs[index], db: db)))
-                    .then((value) => {
-                          if (value != null) {initialise()}
-                        });
-              },
-              contentPadding: EdgeInsets.only(right: 30, left: 36),
-              title: Text(docs[index]['name']),
-              leading: Image.network(
-                docs[index]['urlImage'],
-                fit: BoxFit.cover,
-                width: 70,
-              ),
-              subtitle: Text(docs[index]['description']),
             ),
           );
         },
@@ -128,8 +138,9 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Add(db: db)))
-              .then((value) {
+              context,
+              MaterialPageRoute(
+                  builder: (context) => MyCustomLoginUI(db: db))).then((value) {
             if (value != null) {
               initialise();
             }
