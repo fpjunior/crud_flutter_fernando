@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crud/add.dart';
 import 'package:firebase_crud/database.dart';
@@ -140,10 +141,26 @@ class _MyHomePageState extends State<MyHomePage> {
                     color: Colors.white,
                   ),
                 ),
-                leading: Image.network(
-                  docs[index]['urlImage'],
-                  fit: BoxFit.cover,
+                leading: Container(
                   width: 70,
+                  height: 70,
+                  child: CachedNetworkImage(
+                    imageUrl: docs[index]['urlImage'],
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => Image.asset(
+                      'assets/logo.jpeg',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
                 subtitle: Text(
                   docs[index]['description'],

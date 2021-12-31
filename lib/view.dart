@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_pro/carousel_pro.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -18,6 +20,8 @@ class _ViewState extends State<View> {
   TextEditingController nameController = new TextEditingController();
   TextEditingController descriptionController = new TextEditingController();
   TextEditingController urlImageController = new TextEditingController();
+  TextEditingController urlImage2Controller = new TextEditingController();
+  TextEditingController urlImage3Controller = new TextEditingController();
   TextEditingController precoController = new TextEditingController();
 
   bool isEditar = true;
@@ -28,6 +32,8 @@ class _ViewState extends State<View> {
     nameController.text = widget.produtos['name'];
     descriptionController.text = widget.produtos['description'];
     urlImageController.text = widget.produtos['urlImage'];
+    urlImage2Controller.text = widget.produtos['urlImage2'];
+    urlImage3Controller.text = widget.produtos['urlImage3'];
     precoController.text = widget.produtos['preco'];
   }
 
@@ -57,109 +63,187 @@ class _ViewState extends State<View> {
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(20),
-          child: Column(
-            children: [
-              Image.network(
-                widget.produtos["urlImage"],
-                width: 300,
-                fit: BoxFit.cover,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              isEditar == false
-                  ? TextField(
-                      readOnly: isEditar,
-                      style: TextStyle(color: Colors.white),
-                      controller: nameController,
-                      decoration: InputDecoration(
-                          labelText: "Nome",
-                          labelStyle: TextStyle(
-                            color: Color(0xffA9DED8),
-                          )),
-                    )
-                  : Text(
-                      widget.produtos["name"],
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
-                    ),
-              SizedBox(
-                height: 20,
-              ),
-              isEditar == false
-                  ? TextField(
-                      readOnly: isEditar,
-                      style: TextStyle(color: Colors.white),
-                      controller: descriptionController,
-                      decoration: InputDecoration(
-                          labelText: "Descrição",
-                          labelStyle: TextStyle(
-                            color: Color(0xffA9DED8),
-                          )),
-                    )
-                  : Text(
-                      descriptionController.text,
-                      style: TextStyle(color: Colors.white),
-                    ),
-              SizedBox(
-                height: 20,
-              ),
-              isEditar == false
-                  ? TextField(
-                      readOnly: isEditar,
-                      style: TextStyle(color: Colors.white),
-                      controller: urlImageController,
-                      decoration: InputDecoration(
-                          labelText: "Url da Imagem",
-                          labelStyle: TextStyle(
-                            color: Color(0xffA9DED8),
-                          )),
-                    )
-                  : Container(
-                      alignment: Alignment.topLeft,
-                      child: RichText(
-                        text: TextSpan(
-                          text: "Link: ",
-                          style: TextStyle(color: Colors.white),
-                          children: [
-                            TextSpan(
-                              text: 'Abrir Imagem',
-                              style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  color: Colors.blue),
-                              recognizer: new TapGestureRecognizer()
-                                ..onTap = () {
-                                  launch(widget.produtos["urlImage"]);
-                                },
+          child: SizedBox(
+            child: Column(
+              children: [
+                Container(
+                  height:
+                      mounted ? MediaQuery.of(context).size.height * 0.4 : 0,
+                  child: Carousel(
+                    autoplay: false,
+                    animationCurve: Curves.fastOutSlowIn,
+                    images: [
+                      CachedNetworkImage(
+                        imageUrl: widget.produtos['urlImage'],
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
                             ),
-                          ],
+                          ),
+                        ),
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Image.asset(
+                          'assets/logo.jpeg',
+                          fit: BoxFit.cover,
                         ),
                       ),
-                    ),
-              SizedBox(
-                height: 20,
-              ),
-              isEditar == false
-                  ? TextField(
-                      style: TextStyle(color: Colors.white),
-                      readOnly: isEditar,
-                      controller: precoController,
-                      decoration: InputDecoration(
-                          labelText: "Média de Preço",
-                          labelStyle: TextStyle(
-                            color: Color(0xffA9DED8),
-                          )),
-                    )
-                  : Container(
-                      alignment: Alignment.bottomLeft,
-                      child: Text(
-                        'Média de Preço: ${precoController.text}',
+                      CachedNetworkImage(
+                        imageUrl: widget.produtos['urlImage2'],
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Image.asset(
+                          'assets/logo.jpeg',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      CachedNetworkImage(
+                        imageUrl: widget.produtos['urlImage3'],
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Image.asset(
+                          'assets/logo.jpeg',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                isEditar == false
+                    ? TextField(
+                        readOnly: isEditar,
+                        style: TextStyle(color: Colors.white),
+                        controller: nameController,
+                        decoration: InputDecoration(
+                            labelText: "Nome",
+                            labelStyle: TextStyle(
+                              color: Color(0xffA9DED8),
+                            )),
+                      )
+                    : Text(
+                        widget.produtos["name"],
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                      ),
+                SizedBox(
+                  height: 20,
+                ),
+                isEditar == false
+                    ? TextField(
+                        readOnly: isEditar,
+                        style: TextStyle(color: Colors.white),
+                        controller: descriptionController,
+                        decoration: InputDecoration(
+                            labelText: "Descrição",
+                            labelStyle: TextStyle(
+                              color: Color(0xffA9DED8),
+                            )),
+                      )
+                    : Text(
+                        descriptionController.text,
                         style: TextStyle(color: Colors.white),
                       ),
-                    ),
-            ],
+                SizedBox(
+                  height: 20,
+                ),
+                isEditar == false
+                    ? TextField(
+                        readOnly: isEditar,
+                        style: TextStyle(color: Colors.white),
+                        controller: urlImageController,
+                        decoration: InputDecoration(
+                            labelText: "Url da Imagem",
+                            labelStyle: TextStyle(
+                              color: Color(0xffA9DED8),
+                            )),
+                      )
+                    : Container(
+                        alignment: Alignment.topLeft,
+                        child: RichText(
+                          text: TextSpan(
+                            text: "Link: ",
+                            style: TextStyle(color: Colors.white),
+                            children: [
+                              TextSpan(
+                                text: 'Imagem1   ',
+                                style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    color: Colors.blue),
+                                recognizer: new TapGestureRecognizer()
+                                  ..onTap = () {
+                                    launch(widget.produtos["urlImage"]);
+                                  },
+                              ),
+                              TextSpan(
+                                text: 'Imagem2   ',
+                                style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    color: Colors.blue),
+                                recognizer: new TapGestureRecognizer()
+                                  ..onTap = () {
+                                    launch(widget.produtos["urlImage2"]);
+                                  },
+                              ),
+                              TextSpan(
+                                text: 'Imagem3',
+                                style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    color: Colors.blue),
+                                recognizer: new TapGestureRecognizer()
+                                  ..onTap = () {
+                                    launch(widget.produtos["urlImage3"]);
+                                  },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                SizedBox(
+                  height: 20,
+                ),
+                isEditar == false
+                    ? TextField(
+                        style: TextStyle(color: Colors.white),
+                        readOnly: isEditar,
+                        controller: precoController,
+                        decoration: InputDecoration(
+                            labelText: "Média de Preço",
+                            labelStyle: TextStyle(
+                              color: Color(0xffA9DED8),
+                            )),
+                      )
+                    : Container(
+                        alignment: Alignment.bottomLeft,
+                        child: Text(
+                          'Média de Preço: ${precoController.text}',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+              ],
+            ),
           ),
         ),
       ),
@@ -171,6 +255,8 @@ class _ViewState extends State<View> {
               nameController.text,
               descriptionController.text,
               urlImageController.text,
+              urlImage2Controller.text,
+              urlImage3Controller.text,
               precoController.text);
           Navigator.pop(context, true);
         },
