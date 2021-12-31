@@ -18,8 +18,6 @@ class _MyCustomLoginUIState extends State<MyCustomLoginUI>
   TextEditingController nameController = new TextEditingController();
   TextEditingController descriptionController = new TextEditingController();
   TextEditingController urlImageController = new TextEditingController();
-  TextEditingController urlImage2Controller = new TextEditingController();
-  TextEditingController urlImage3Controller = new TextEditingController();
   TextEditingController precoController = new TextEditingController();
 
   AnimationController _controller;
@@ -144,8 +142,6 @@ class _MyCustomLoginUIState extends State<MyCustomLoginUI>
                                   nameController.text,
                                   descriptionController.text,
                                   urlImageController.text,
-                                  urlImage2Controller.text,
-                                  urlImage3Controller.text,
                                   precoController.text);
                               Navigator.pop(context, true);
 

@@ -20,8 +20,6 @@ class _ViewState extends State<View> {
   TextEditingController nameController = new TextEditingController();
   TextEditingController descriptionController = new TextEditingController();
   TextEditingController urlImageController = new TextEditingController();
-  TextEditingController urlImage2Controller = new TextEditingController();
-  TextEditingController urlImage3Controller = new TextEditingController();
   TextEditingController precoController = new TextEditingController();
 
   bool isEditar = true;
@@ -32,8 +30,6 @@ class _ViewState extends State<View> {
     nameController.text = widget.produtos['name'];
     descriptionController.text = widget.produtos['description'];
     urlImageController.text = widget.produtos['urlImage'];
-    urlImage2Controller.text = widget.produtos['urlImage2'];
-    urlImage3Controller.text = widget.produtos['urlImage3'];
     precoController.text = widget.produtos['preco'];
   }
 
@@ -75,40 +71,6 @@ class _ViewState extends State<View> {
                     images: [
                       CachedNetworkImage(
                         imageUrl: widget.produtos['urlImage'],
-                        imageBuilder: (context, imageProvider) => Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        placeholder: (context, url) =>
-                            const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => Image.asset(
-                          'assets/logo.jpeg',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      CachedNetworkImage(
-                        imageUrl: widget.produtos['urlImage2'],
-                        imageBuilder: (context, imageProvider) => Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        placeholder: (context, url) =>
-                            const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => Image.asset(
-                          'assets/logo.jpeg',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      CachedNetworkImage(
-                        imageUrl: widget.produtos['urlImage3'],
                         imageBuilder: (context, imageProvider) => Container(
                           decoration: BoxDecoration(
                             image: DecorationImage(
@@ -197,26 +159,6 @@ class _ViewState extends State<View> {
                                     launch(widget.produtos["urlImage"]);
                                   },
                               ),
-                              TextSpan(
-                                text: 'Imagem2   ',
-                                style: TextStyle(
-                                    decoration: TextDecoration.underline,
-                                    color: Colors.blue),
-                                recognizer: new TapGestureRecognizer()
-                                  ..onTap = () {
-                                    launch(widget.produtos["urlImage2"]);
-                                  },
-                              ),
-                              TextSpan(
-                                text: 'Imagem3',
-                                style: TextStyle(
-                                    decoration: TextDecoration.underline,
-                                    color: Colors.blue),
-                                recognizer: new TapGestureRecognizer()
-                                  ..onTap = () {
-                                    launch(widget.produtos["urlImage3"]);
-                                  },
-                              ),
                             ],
                           ),
                         ),
@@ -255,8 +197,6 @@ class _ViewState extends State<View> {
               nameController.text,
               descriptionController.text,
               urlImageController.text,
-              urlImage2Controller.text,
-              urlImage3Controller.text,
               precoController.text);
           Navigator.pop(context, true);
         },

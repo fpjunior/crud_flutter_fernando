@@ -111,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       body: ListView.builder(
-        itemCount: docs.length,
+        itemCount: docs?.length,
         itemBuilder: (BuildContext context, int index) {
           return new Container(
             padding: new EdgeInsets.only(right: 13.0),

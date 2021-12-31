@@ -15,8 +15,6 @@ class _AddState extends State<Add> {
   TextEditingController nameController = new TextEditingController();
   TextEditingController descriptionController = new TextEditingController();
   TextEditingController urlImageController = new TextEditingController();
-  TextEditingController urlImage2Controller = new TextEditingController();
-  TextEditingController urlImage3Controller = new TextEditingController();
   TextEditingController precoController = new TextEditingController();
   @override
   void initState() {
@@ -64,11 +62,6 @@ class _AddState extends State<Add> {
               ),
               TextFormField(
                 style: TextStyle(color: Colors.white),
-                decoration: inputDecoration("Url Imagem"),
-                controller: urlImage2Controller,
-              ),
-              TextFormField(
-                style: TextStyle(color: Colors.white),
                 decoration: inputDecoration("Preço"),
                 controller: precoController,
               ),
@@ -88,8 +81,6 @@ class _AddState extends State<Add> {
                     nameController.text,
                     descriptionController.text,
                     urlImageController.text,
-                    urlImage2Controller.text,
-                    urlImage3Controller.text,
                     precoController.text);
                 Navigator.pop(context, true);
               },
