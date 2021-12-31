@@ -69,23 +69,14 @@ class _ViewState extends State<View> {
                     autoplay: false,
                     animationCurve: Curves.fastOutSlowIn,
                     images: [
-                      CachedNetworkImage(
-                        imageUrl: widget.produtos['urlImage'],
-                        imageBuilder: (context, imageProvider) => Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        placeholder: (context, url) =>
-                            const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => Image.asset(
+                      Image.network(widget.produtos['urlImage'] ?? "",
+                          errorBuilder: (BuildContext context, Object exception,
+                              StackTrace stackTrace) {
+                        return Image.asset(
                           'assets/logo.jpeg',
                           fit: BoxFit.cover,
-                        ),
-                      ),
+                        );
+                      })
                     ],
                   ),
                 ),
