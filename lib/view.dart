@@ -190,16 +190,22 @@ class _EditarProdutoState extends State<EditarProduto> {
                   height: 20,
                 ),
                 isEditar == false
-                    ? TextField(
+                    ? TextFormField(
                         keyboardType: TextInputType.number,
                         style: TextStyle(color: Colors.white),
                         readOnly: isEditar,
                         controller: precoController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
+                            // labelText: "Média de Preço",
+                            // labelStyle: TextStyle(
+                            //   color: Color(0xffA9DED8),
+                            // )
+                            border: OutlineInputBorder(),
                             labelText: "Média de Preço",
-                            labelStyle: TextStyle(
-                              color: Color(0xffA9DED8),
-                            )),
+                            prefixText: "R\$",
+                            prefixStyle: TextStyle(color: Colors.white),
+                            suffixText: "Reais",
+                            suffixStyle: TextStyle(color: Colors.green)),
                       )
                     : Container(
                         alignment: Alignment.bottomLeft,
