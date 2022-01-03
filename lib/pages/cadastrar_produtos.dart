@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import 'database.dart';
+import '../database.dart';
 
-class MyCustomLoginUI extends StatefulWidget {
-  MyCustomLoginUI({Key key, this.db}) : super(key: key);
+class CadastrarProdutos extends StatefulWidget {
+  CadastrarProdutos({Key key, this.db}) : super(key: key);
   Database db;
 
   @override
-  _MyCustomLoginUIState createState() => _MyCustomLoginUIState();
+  CadastrarProdutosState createState() => CadastrarProdutosState();
 }
 
-class _MyCustomLoginUIState extends State<MyCustomLoginUI>
+class CadastrarProdutosState extends State<CadastrarProdutos>
     with SingleTickerProviderStateMixin {
   TextEditingController nameController = new TextEditingController();
   TextEditingController descriptionController = new TextEditingController();

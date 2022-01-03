@@ -4,19 +4,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'database.dart';
 
-class View extends StatefulWidget {
-  View({Key key, this.produtos, this.db}) : super(key: key);
+class EditarProduto extends StatefulWidget {
+  EditarProduto({Key key, this.produtos, this.db}) : super(key: key);
   Map produtos;
   Database db;
   @override
-  _ViewState createState() => _ViewState();
+  _EditarProdutoState createState() => _EditarProdutoState();
 }
 
-class _ViewState extends State<View> {
+class _EditarProdutoState extends State<EditarProduto> {
   TextEditingController nameController = new TextEditingController();
   TextEditingController descriptionController = new TextEditingController();
   TextEditingController urlImageController = new TextEditingController();
@@ -180,20 +181,57 @@ class _ViewState extends State<View> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        heroTag: "btn1",
-        onPressed: () {
-          widget.db.update(
-              widget.produtos['id'],
-              nameController.text,
-              descriptionController.text,
-              urlImageController.text,
-              precoController.text);
-          Navigator.pop(context, true);
-        },
-        child: Icon(Icons.save),
-        backgroundColor: Colors.green,
-      ),
+      floatingActionButton: !isEditar
+          ? FloatingActionButton(
+              heroTag: "btn1",
+              onPressed: () {
+                // widget.db.update(
+                //     widget.produtos['id'],
+                //     nameController.text,
+                //     descriptionController.text,
+                //     urlImageController.text,
+                //     precoController.text);
+
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text(
+                          "Tem certeza que deseja salvar as alterações?",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text("Sim",
+                                style: TextStyle(color: Colors.black)),
+                            onPressed: () => {
+                              widget.db.update(
+                                  widget.produtos['id'],
+                                  nameController.text,
+                                  descriptionController.text,
+                                  urlImageController.text,
+                                  precoController.text),
+                              Navigator.pop(context, true),
+                              isEditar = true,
+                              Fluttertoast.showToast(
+                                msg: 'Alteração realizada com sucesso!',
+                              ),
+                            },
+                          ),
+                          FlatButton(
+                            child: Text("Não",
+                                style: TextStyle(color: Colors.black)),
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                        ],
+                        // content: Text("Body"),
+                      );
+                    });
+              },
+              child: Icon(Icons.save),
+              backgroundColor: Colors.green,
+            )
+          : Container(),
     );
   }
 

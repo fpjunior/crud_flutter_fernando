@@ -1,11 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crud/add.dart';
 import 'package:firebase_crud/database.dart';
-import 'package:firebase_crud/splashScreen.dart';
+import 'package:firebase_crud/widgets/splashScreen.dart';
 import 'package:firebase_crud/view.dart';
-import 'package:firebase_crud/view2.dart';
-import 'package:firebase_crud/view3.dart';
+import 'package:firebase_crud/pages/cadastrar_produtos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
@@ -93,10 +90,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: FloatingActionButton(
                   onPressed: () {
                     Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MyCustomLoginUI(db: db)))
-                        .then((value) {
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                CadastrarProdutos(db: db))).then((value) {
                       if (value != null) {
                         initialise();
                       }
@@ -132,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => View(
+                                      builder: (context) => EditarProduto(
                                           produtos: docs[index],
                                           db: db))).then((value) => {
                                     if (value != null) {initialise()}
@@ -182,7 +179,7 @@ class _MyHomePageState extends State<MyHomePage> {
               //     Navigator.push(
               //         context,
               //         MaterialPageRoute(
-              //             builder: (context) => MyCustomLoginUI(db: db))).then((value) {
+              //             builder: (context) => CadastrarProdutos(db: db))).then((value) {
               //       if (value != null) {
               //         initialise();
               //       }

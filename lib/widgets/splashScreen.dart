@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:animations/animations.dart';
 import 'package:firebase_crud/main.dart';
 import 'package:flutter/material.dart';
 
