@@ -45,8 +45,39 @@ class _EditarProdutoState extends State<EditarProduto> {
           IconButton(
               icon: Icon(Icons.delete),
               onPressed: () {
-                widget.db.delete(widget.produtos["id"]);
-                Navigator.pop(context, true);
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text(
+                          "Tem certeza que deseja excluir esse produto?",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text("Sim",
+                                style: TextStyle(color: Colors.black)),
+                            onPressed: () => {
+                              widget.db.delete(widget.produtos["id"]),
+                              Navigator.pop(context, true),
+                              Navigator.pop(context, true),
+                              Fluttertoast.showToast(
+                                msg: 'Produto excluído com sucesso!',
+                              ),
+                            },
+                          ),
+                          FlatButton(
+                            child: Text("Não",
+                                style: TextStyle(color: Colors.black)),
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                        ],
+                        // content: Text("Body"),
+                      );
+                    });
+
+                // widget.db.delete(widget.produtos["id"]);
+                // Navigator.pop(context, true);
               }),
           IconButton(
               icon: Icon(Icons.edit),
@@ -185,13 +216,6 @@ class _EditarProdutoState extends State<EditarProduto> {
           ? FloatingActionButton(
               heroTag: "btn1",
               onPressed: () {
-                // widget.db.update(
-                //     widget.produtos['id'],
-                //     nameController.text,
-                //     descriptionController.text,
-                //     urlImageController.text,
-                //     precoController.text);
-
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
