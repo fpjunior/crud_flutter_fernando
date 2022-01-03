@@ -75,9 +75,6 @@ class _EditarProdutoState extends State<EditarProduto> {
                         // content: Text("Body"),
                       );
                     });
-
-                // widget.db.delete(widget.produtos["id"]);
-                // Navigator.pop(context, true);
               }),
           IconButton(
               icon: Icon(Icons.edit),
@@ -138,6 +135,9 @@ class _EditarProdutoState extends State<EditarProduto> {
                 ),
                 isEditar == false
                     ? TextField(
+                        maxLines:
+                            descriptionController.text.length < 44 ? null : 8,
+                        textCapitalization: TextCapitalization.sentences,
                         readOnly: isEditar,
                         style: TextStyle(color: Colors.white),
                         controller: descriptionController,
@@ -191,6 +191,7 @@ class _EditarProdutoState extends State<EditarProduto> {
                 ),
                 isEditar == false
                     ? TextField(
+                        keyboardType: TextInputType.number,
                         style: TextStyle(color: Colors.white),
                         readOnly: isEditar,
                         controller: precoController,
