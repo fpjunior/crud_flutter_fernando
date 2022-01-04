@@ -1,12 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_pro/carousel_pro.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'core/colors.dart';
 import 'database.dart';
 
 class EditarProduto extends StatefulWidget {
@@ -118,6 +117,7 @@ class _EditarProdutoState extends State<EditarProduto> {
                         style: TextStyle(color: Colors.white),
                         controller: nameController,
                         decoration: InputDecoration(
+                            border: OutlineInputBorder(),
                             labelText: "Nome",
                             labelStyle: TextStyle(
                               color: Color(0xffA9DED8),
@@ -134,14 +134,15 @@ class _EditarProdutoState extends State<EditarProduto> {
                   height: 20,
                 ),
                 isEditar == false
-                    ? TextField(
+                    ? TextFormField(
                         maxLines:
-                            descriptionController.text.length < 44 ? null : 8,
+                            descriptionController.text.length < 44 ? null : 5,
                         textCapitalization: TextCapitalization.sentences,
                         readOnly: isEditar,
                         style: TextStyle(color: Colors.white),
                         controller: descriptionController,
                         decoration: InputDecoration(
+                            border: OutlineInputBorder(),
                             labelText: "Descrição",
                             labelStyle: TextStyle(
                               color: Color(0xffA9DED8),
@@ -155,16 +156,17 @@ class _EditarProdutoState extends State<EditarProduto> {
                   height: 20,
                 ),
                 isEditar == false
-                    ? TextField(
+                    ? TextFormField(
                         readOnly: isEditar,
                         style: TextStyle(color: Colors.white),
                         controller: urlImageController,
-                        decoration: InputDecoration(
-                            labelText: "Url da Imagem",
-                            labelStyle: TextStyle(
-                              color: Color(0xffA9DED8),
-                            )),
-                      )
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Url da Imagem",
+                          labelStyle: TextStyle(
+                            color: Color(0xffA9DED8),
+                          ),
+                        ))
                     : Container(
                         alignment: Alignment.topLeft,
                         child: RichText(
@@ -196,16 +198,16 @@ class _EditarProdutoState extends State<EditarProduto> {
                         readOnly: isEditar,
                         controller: precoController,
                         decoration: const InputDecoration(
-                            // labelText: "Média de Preço",
-                            // labelStyle: TextStyle(
-                            //   color: Color(0xffA9DED8),
-                            // )
+                            labelStyle: TextStyle(
+                              color: AppColors.kLabelTextField,
+                            ),
                             border: OutlineInputBorder(),
                             labelText: "Média de Preço",
                             prefixText: "R\$",
                             prefixStyle: TextStyle(color: Colors.white),
                             suffixText: "Reais",
-                            suffixStyle: TextStyle(color: Colors.green)),
+                            suffixStyle:
+                                TextStyle(color: AppColors.kSuffixTextField)),
                       )
                     : Container(
                         alignment: Alignment.bottomLeft,
@@ -232,7 +234,7 @@ class _EditarProdutoState extends State<EditarProduto> {
                           style: TextStyle(color: Colors.black),
                         ),
                         actions: <Widget>[
-                          FlatButton(
+                          TextButton(
                             child: Text("Sim",
                                 style: TextStyle(color: Colors.black)),
                             onPressed: () => {
@@ -249,7 +251,7 @@ class _EditarProdutoState extends State<EditarProduto> {
                               ),
                             },
                           ),
-                          FlatButton(
+                          TextButton(
                             child: Text("Não",
                                 style: TextStyle(color: Colors.black)),
                             onPressed: () => Navigator.pop(context),

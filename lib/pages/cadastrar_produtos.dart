@@ -195,8 +195,6 @@ class CadastrarProdutosState extends State<CadastrarProdutos>
       child: TextField(
         controller: field,
         style: TextStyle(color: Colors.white.withOpacity(.9)),
-        // obscureText: isPassword,
-        // keyboardType: isEmail ? TextInputType.emailAddress : TextInputType.text,
         decoration: InputDecoration(
           prefix: Text('     '),
           border: InputBorder.none,

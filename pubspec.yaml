@@ -20,7 +20,8 @@ dependencies:
   url_launcher:
   cached_network_image: ^3.2.0
   carousel_pro:
-  
+  progress_state_button:
+    
 dev_dependencies:
   flutter_test:
     sdk: flutter

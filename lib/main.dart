@@ -4,7 +4,8 @@ import 'package:firebase_crud/widgets/splashScreen.dart';
 import 'package:firebase_crud/view.dart';
 import 'package:firebase_crud/pages/cadastrar_produtos.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+
+import 'core/colors.dart';
 
 // void main() async {
 //   WidgetsFlutterBinding.ensureInitialized();
@@ -78,9 +79,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromRGBO(56, 75, 49, 1.0),
+        backgroundColor: AppColors.kBackgroundColor,
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(56, 75, 49, 1.0),
+          backgroundColor: AppColors.kBackgroundColor,
           title: Center(child: Text("Lista de Produtos")),
           actions: [
             Container(
@@ -88,6 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: SizedBox(
                 width: 40,
                 child: FloatingActionButton(
+                  backgroundColor: AppColors.kColotBtnAdd,
                   onPressed: () {
                     Navigator.push(
                         context,
@@ -100,7 +102,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     });
                   },
                   tooltip: 'Cadastrar um novo produto',
-                  child: Icon(Icons.add),
+                  child: Icon(
+                    Icons.add,
+                  ),
                 ),
               ),
             ), // This t
@@ -122,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           semanticContainer: true,
                           clipBehavior: Clip.antiAliasWithSaveLayer,
                           elevation: 5,
-                          color: Color(0xff292C31),
+                          color: AppColors.kColorCard,
                           margin: EdgeInsets.all(10),
                           child: ListTile(
                             onTap: () {
@@ -163,7 +167,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontSize: 15,
-                                color: Color(0xffA9DED8),
+                                color: AppColors.kColorSubtitle,
                               ),
                             ),
                           ),
@@ -174,71 +178,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 }
               }
               return Center(child: CircularProgressIndicator());
-              // floatingActionButton: FloatingActionButton(
-              //   onPressed: () {
-              //     Navigator.push(
-              //         context,
-              //         MaterialPageRoute(
-              //             builder: (context) => CadastrarProdutos(db: db))).then((value) {
-              //       if (value != null) {
-              //         initialise();
-              //       }
-              //     });
-              //   },
-              //   tooltip: 'Cadastrar um novo produto',
-              //   child: Icon(Icons.add),
-              // ), // This trailing comma makes auto-formatting nicer for build methods.
             }));
-  }
-}
-
-class SlideAnimation3 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    double _w = MediaQuery.of(context).size.width;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Go Back"),
-        centerTitle: true,
-        brightness: Brightness.dark,
-      ),
-      body: AnimationLimiter(
-        child: ListView.builder(
-          padding: EdgeInsets.all(_w / 30),
-          physics:
-              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-          itemCount: 20,
-          itemBuilder: (BuildContext context, int index) {
-            return AnimationConfiguration.staggeredList(
-              position: index,
-              delay: Duration(milliseconds: 100),
-              child: SlideAnimation(
-                duration: Duration(milliseconds: 2500),
-                curve: Curves.fastLinearToSlowEaseIn,
-                child: FadeInAnimation(
-                  curve: Curves.fastLinearToSlowEaseIn,
-                  duration: Duration(milliseconds: 2500),
-                  child: Container(
-                    margin: EdgeInsets.only(bottom: _w / 20),
-                    height: _w / 4,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 40,
-                          spreadRadius: 10,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            );
-          },
-        ),
-      ),
-    );
   }
 }
