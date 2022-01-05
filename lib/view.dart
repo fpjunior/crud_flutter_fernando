@@ -101,7 +101,7 @@ class _EditarProdutoState extends State<EditarProduto> {
                           errorBuilder: (BuildContext context, Object exception,
                               StackTrace stackTrace) {
                         return Image.asset(
-                          'assets/logo.jpeg',
+                          'assets/logo.png',
                           fit: BoxFit.cover,
                         );
                       })

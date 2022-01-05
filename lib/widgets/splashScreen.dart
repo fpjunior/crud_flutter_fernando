@@ -2,12 +2,12 @@ import 'dart:async';
 import 'package:firebase_crud/main.dart';
 import 'package:flutter/material.dart';
 
-class SecondScreen extends StatefulWidget {
+class SplashScreen extends StatefulWidget {
   @override
-  _SecondScreenState createState() => _SecondScreenState();
+  _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SecondScreenState extends State<SecondScreen> {
+class _SplashScreenState extends State<SplashScreen> {
   bool _a = false;
 
   @override

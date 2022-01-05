@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SecondScreen(),
+      home: SplashScreen(),
     );
   }
 }
@@ -89,7 +89,6 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: AppColors.kBackgroundColor,
         appBar: AppBar(
           backgroundColor: AppColors.kBackgroundColor,
-          // title: Center(child: Text("Lista de Produtos")),
           title: customSearchBar,
           automaticallyImplyLeading: false,
           actions: [
@@ -207,24 +206,26 @@ class _MyHomePageState extends State<MyHomePage> {
                             },
                             contentPadding:
                                 EdgeInsets.only(right: 30, left: 36),
-                            title: Text(
-                              list[index]['name'],
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
+                            title: Container(
+                              child: Text(
+                                list[index]['name'],
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                             leading: Container(
                                 width: 70,
-                                height: 70,
+                                // height: 70,
                                 child:
                                     Image.network(list[index]['urlImage'] ?? "",
                                         errorBuilder: (BuildContext context,
                                             Object exception,
                                             StackTrace stackTrace) {
                                   return Image.asset(
-                                    'assets/logo.jpeg',
+                                    'assets/logo.png',
                                     fit: BoxFit.cover,
                                   );
                                 })),
