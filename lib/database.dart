@@ -6,13 +6,14 @@ class Database {
     firestore = FirebaseFirestore.instance;
   }
 
-  Future<void> create(
-      String name, String description, String urlImage, String preco) async {
+  Future<void> create(String name, String description, String urlImage,
+      String urlImage2, String preco) async {
     try {
       await firestore.collection("produtos").add({
         'name': name,
         'description': description,
         'urlImage': urlImage,
+        'urlImage2': urlImage2,
         'preco': preco,
         // 'timestamp': FieldValue.serverTimestamp()
       });
@@ -42,6 +43,7 @@ class Database {
             "name": doc['name'],
             "description": doc["description"],
             "urlImage": doc["urlImage"],
+            "urlImage2": doc["urlImage2"],
             "preco": doc["preco"],
           };
           docs.add(a);
@@ -54,12 +56,13 @@ class Database {
   }
 
   Future<void> update(String id, String name, String description,
-      String urlImage, String preco) async {
+      String urlImage, String urlImage2, String preco) async {
     try {
       await firestore.collection("produtos").doc(id).update({
         'name': name,
         'description': description,
         'urlImage': urlImage,
+        'urlImage2': urlImage2,
         'preco': preco
       });
     } catch (e) {

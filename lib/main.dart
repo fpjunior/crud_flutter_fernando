@@ -61,6 +61,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String searchResult = '';
+  String hintText = '';
 
   Icon customIcon = const Icon(Icons.search);
   Widget customSearchBar = const Text('Lista de Produtos');
@@ -111,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           });
                         },
                         decoration: InputDecoration(
-                          hintText: 'digite o nome do produto',
+                          hintText: hintText,
                           hintStyle: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
@@ -226,7 +227,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                             StackTrace stackTrace) {
                                   return Image.asset(
                                     'assets/logo.png',
-                                    fit: BoxFit.cover,
+                                    // fit: BoxFit.cover,
+                                    // cacheHeight: 290,
                                   );
                                 })),
                             subtitle: Text(

@@ -20,6 +20,7 @@ class _EditarProdutoState extends State<EditarProduto> {
   TextEditingController nameController = new TextEditingController();
   TextEditingController descriptionController = new TextEditingController();
   TextEditingController urlImageController = new TextEditingController();
+  TextEditingController urlImage2Controller = new TextEditingController();
   TextEditingController precoController = new TextEditingController();
 
   bool isEditar = true;
@@ -30,6 +31,7 @@ class _EditarProdutoState extends State<EditarProduto> {
     nameController.text = widget.produtos['name'];
     descriptionController.text = widget.produtos['description'];
     urlImageController.text = widget.produtos['urlImage'];
+    urlImage2Controller.text = widget.produtos['urlImage2'];
     precoController.text = widget.produtos['preco'];
   }
 
@@ -93,20 +95,58 @@ class _EditarProdutoState extends State<EditarProduto> {
                 Container(
                   height:
                       mounted ? MediaQuery.of(context).size.height * 0.4 : 0,
-                  child: Carousel(
-                    autoplay: false,
-                    animationCurve: Curves.fastOutSlowIn,
-                    images: [
-                      Image.network(widget.produtos['urlImage'] ?? "",
-                          errorBuilder: (BuildContext context, Object exception,
-                              StackTrace stackTrace) {
-                        return Image.asset(
-                          'assets/logo.png',
-                          fit: BoxFit.cover,
-                        );
-                      })
-                    ],
-                  ),
+                  child: widget.produtos['urlImage2'] != null &&
+                          widget.produtos['urlImage2'] != ""
+                      ? Carousel(
+                          autoplay: false,
+                          boxFit: BoxFit.cover,
+                          images: [
+                            Image.network(widget.produtos['urlImage'] ?? "",
+                                errorBuilder: (BuildContext context,
+                                    Object exception, StackTrace stackTrace) {
+                              return Image.asset(
+                                'assets/logo.png',
+                                cacheHeight: 300,
+                              );
+                            }),
+                            Image.network(widget.produtos['urlImage2'],
+                                errorBuilder: (BuildContext context,
+                                    Object exception, StackTrace stackTrace) {
+                              return Container(
+                                child: Image.asset(
+                                  'assets/logo.png',
+                                  cacheHeight: 300,
+                                ),
+                              );
+                            })
+                          ],
+                          dotSize: 4.0,
+                          dotSpacing: 15.0,
+                          dotColor: Colors.white,
+                          indicatorBgPadding: 5.0,
+                          dotBgColor: Colors.grey,
+                        )
+                      : Carousel(
+                          autoplay: false,
+                          boxFit: BoxFit.cover,
+                          images: [
+                            Image.network(widget.produtos['urlImage'] ?? "",
+                                errorBuilder: (BuildContext context,
+                                    Object exception, StackTrace stackTrace) {
+                              return Container(
+                                child: Image.asset(
+                                  'assets/logo.png',
+                                  cacheHeight: 300,
+                                ),
+                              );
+                            }),
+                          ],
+                          dotSize: 4.0,
+                          dotSpacing: 15.0,
+                          dotColor: Colors.white,
+                          indicatorBgPadding: 5.0,
+                          dotBgColor: Colors.transparent,
+                        ),
                 ),
                 SizedBox(
                   height: 20,
@@ -243,6 +283,7 @@ class _EditarProdutoState extends State<EditarProduto> {
                                   nameController.text,
                                   descriptionController.text,
                                   urlImageController.text,
+                                  urlImage2Controller.text,
                                   precoController.text),
                               Navigator.pop(context, true),
                               isEditar = true,

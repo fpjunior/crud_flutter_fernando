@@ -18,6 +18,7 @@ class CadastrarProdutosState extends State<CadastrarProdutos>
   TextEditingController nameController = new TextEditingController();
   TextEditingController descriptionController = new TextEditingController();
   TextEditingController urlImageController = new TextEditingController();
+  TextEditingController urlImage2Controller = new TextEditingController();
   TextEditingController precoController = new TextEditingController();
 
   AnimationController _controller;
@@ -97,7 +98,8 @@ class CadastrarProdutosState extends State<CadastrarProdutos>
                       SizedBox(),
                       component1('Nome...', nameController),
                       component1('Descrição...', descriptionController),
-                      component1('Url...', urlImageController),
+                      component1('Url Imagem 1...', urlImageController),
+                      component1('Url Imagem 2...', urlImage2Controller),
                       component1('Média de Preço...', precoController),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -142,6 +144,7 @@ class CadastrarProdutosState extends State<CadastrarProdutos>
                                   nameController.text,
                                   descriptionController.text,
                                   urlImageController.text,
+                                  urlImage2Controller.text,
                                   precoController.text);
                               Navigator.pop(context, true);
 
