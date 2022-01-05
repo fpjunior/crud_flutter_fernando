@@ -49,7 +49,9 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key key, this.title, this.filter}) : super(key: key);
+
+  final String filter;
 
   final String title;
 
@@ -58,6 +60,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String searchResult = '';
+
+  Icon customIcon = const Icon(Icons.search);
+  Widget customSearchBar = const Text('Lista de Produtos');
+
   Database db;
   List docs = [];
   initialise() {
@@ -82,8 +89,52 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: AppColors.kBackgroundColor,
         appBar: AppBar(
           backgroundColor: AppColors.kBackgroundColor,
-          title: Center(child: Text("Lista de Produtos")),
+          // title: Center(child: Text("Lista de Produtos")),
+          title: customSearchBar,
+          automaticallyImplyLeading: false,
           actions: [
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  searchResult = 'suporte telefone';
+                  if (customIcon.icon == Icons.search) {
+                    // Perform set of instructions.
+                    customIcon = const Icon(Icons.cancel);
+                    customSearchBar = ListTile(
+                      leading: Icon(
+                        Icons.search,
+                        color: Colors.white,
+                        size: 28,
+                      ),
+                      title: TextFormField(
+                        onChanged: (text) {
+                          setState(() {
+                            searchResult = text;
+                          });
+                        },
+                        decoration: InputDecoration(
+                          hintText: 'digite o nome do produto',
+                          hintStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontStyle: FontStyle.italic,
+                          ),
+                          border: InputBorder.none,
+                        ),
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    );
+                  } else {
+                    customIcon = const Icon(Icons.search);
+                    customSearchBar = const Text('Lista de Produtos');
+                  }
+                });
+              },
+              icon: const Icon(Icons.search),
+            ),
+
             Container(
               margin: EdgeInsets.only(right: 10),
               child: SizedBox(
@@ -117,8 +168,24 @@ class _MyHomePageState extends State<MyHomePage> {
                 if (index.data == null) {
                   return Center(child: Text("Erro ao carregar dados"));
                 } else {
+                  if (docs.isEmpty == 0) {
+                    return Center(child: Text("Nenhum produto encontrado"));
+                  }
+
+                  List list = [];
+
+                  if (docs.isNotEmpty) {
+                    for (dynamic item in docs) {
+                      String name = item['name'].toString().toLowerCase();
+                      if (name.contains(searchResult.toLowerCase())) {
+                        list.add(item);
+                      }
+                    }
+                  } else {
+                    list.addAll(docs);
+                  }
                   return ListView.builder(
-                    itemCount: docs?.length,
+                    itemCount: list.length,
                     itemBuilder: (BuildContext context, int index) {
                       return new Container(
                         padding: new EdgeInsets.only(right: 13.0),
@@ -142,7 +209,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             contentPadding:
                                 EdgeInsets.only(right: 30, left: 36),
                             title: Text(
-                              docs[index]['name'],
+                              list[index]['name'],
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontSize: 20,
@@ -153,7 +220,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 width: 70,
                                 height: 70,
                                 child:
-                                    Image.network(docs[index]['urlImage'] ?? "",
+                                    Image.network(list[index]['urlImage'] ?? "",
                                         errorBuilder: (BuildContext context,
                                             Object exception,
                                             StackTrace stackTrace) {
@@ -163,7 +230,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   );
                                 })),
                             subtitle: Text(
-                              docs[index]['description'],
+                              list[index]['description'],
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontSize: 15,
