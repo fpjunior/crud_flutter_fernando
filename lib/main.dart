@@ -61,7 +61,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String searchResult = '';
-  String hintText = '';
 
   Icon customIcon = const Icon(Icons.search);
   Widget customSearchBar = const Text('Lista de Produtos');
@@ -96,9 +95,11 @@ class _MyHomePageState extends State<MyHomePage> {
             IconButton(
               onPressed: () {
                 setState(() {
+                  searchResult = '';
+
                   if (customIcon.icon == Icons.search) {
-                    // Perform set of instructions.
                     customIcon = const Icon(Icons.cancel);
+                    // Perform set of instructions.
                     customSearchBar = ListTile(
                       leading: Icon(
                         Icons.search,
@@ -112,10 +113,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           });
                         },
                         decoration: InputDecoration(
-                          hintText: hintText,
+                          hintText: 'digite o nome do produto',
                           hintStyle: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
+                            color: Colors.white24,
+                            fontSize: 15,
                             fontStyle: FontStyle.italic,
                           ),
                           border: InputBorder.none,
@@ -126,8 +127,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     );
                   } else {
-                    customIcon = const Icon(Icons.search);
-                    customSearchBar = const Text('Lista de Produtos');
+                    setState(() {
+                      customIcon = const Icon(Icons.search);
+                      customSearchBar = const Text('Lista de Produtos');
+                    });
                   }
                 });
               },
@@ -200,7 +203,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => EditarProduto(
-                                          produtos: docs[index],
+                                          produtos: list[index],
                                           db: db))).then((value) => {
                                     if (value != null) {initialise()}
                                   });
@@ -228,7 +231,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                   return Image.asset(
                                     'assets/logo.png',
                                     // fit: BoxFit.cover,
-                                    // cacheHeight: 290,
                                   );
                                 })),
                             subtitle: Text(
