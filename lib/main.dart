@@ -96,7 +96,6 @@ class _MyHomePageState extends State<MyHomePage> {
             IconButton(
               onPressed: () {
                 setState(() {
-                  searchResult = 'suporte telefone';
                   if (customIcon.icon == Icons.search) {
                     // Perform set of instructions.
                     customIcon = const Icon(Icons.cancel);
