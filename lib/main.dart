@@ -63,6 +63,14 @@ class _MyHomePageState extends State<MyHomePage> {
     initialise();
   }
 
+  Future<void> _reloadList() async {
+    var newDocs =
+        await Future.delayed(Duration(seconds: 1), () => initialise());
+    setState(() {
+      docs = newDocs;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -141,64 +149,68 @@ class _MyHomePageState extends State<MyHomePage> {
                 } else {
                   list.addAll(docs);
                 }
-                return ListView.builder(
-                  itemCount: list.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return new Container(
-                      padding: new EdgeInsets.only(right: 13.0),
-                      child: Card(
-                        semanticContainer: true,
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        elevation: 5,
-                        color: AppColors.kColorCard,
-                        margin: EdgeInsets.all(10),
-                        child: ListTile(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => EditarProduto(
-                                        produtos: list[index],
-                                        db: db))).then((value) => {
-                                  if (value != null) {initialise()}
-                                });
-                          },
-                          contentPadding: EdgeInsets.only(right: 30, left: 36),
-                          title: Container(
-                            child: Text(
-                              list[index]['name'],
+                return RefreshIndicator(
+                  onRefresh: _reloadList,
+                  child: ListView.builder(
+                    itemCount: list.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return new Container(
+                        padding: new EdgeInsets.only(right: 13.0),
+                        child: Card(
+                          semanticContainer: true,
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          elevation: 5,
+                          color: AppColors.kColorCard,
+                          margin: EdgeInsets.all(10),
+                          child: ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => EditarProduto(
+                                          produtos: list[index],
+                                          db: db))).then((value) => {
+                                    if (value != null) {initialise()}
+                                  });
+                            },
+                            contentPadding:
+                                EdgeInsets.only(right: 30, left: 36),
+                            title: Container(
+                              child: Text(
+                                list[index]['name'],
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            leading: Container(
+                                width: 70,
+                                // height: 70,
+                                child:
+                                    Image.network(list[index]['urlImage'] ?? "",
+                                        errorBuilder: (BuildContext context,
+                                            Object exception,
+                                            StackTrace stackTrace) {
+                                  return Image.asset(
+                                    'assets/logo.png',
+                                    // fit: BoxFit.cover,
+                                  );
+                                })),
+                            subtitle: Text(
+                              list[index]['description'],
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
+                                fontSize: 15,
+                                color: AppColors.kColorSubtitle,
                               ),
                             ),
                           ),
-                          leading: Container(
-                              width: 70,
-                              // height: 70,
-                              child:
-                                  Image.network(list[index]['urlImage'] ?? "",
-                                      errorBuilder: (BuildContext context,
-                                          Object exception,
-                                          StackTrace stackTrace) {
-                                return Image.asset(
-                                  'assets/logo.png',
-                                  // fit: BoxFit.cover,
-                                );
-                              })),
-                          subtitle: Text(
-                            list[index]['description'],
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: AppColors.kColorSubtitle,
-                            ),
-                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 );
               }
             }
