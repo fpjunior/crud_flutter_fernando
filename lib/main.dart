@@ -155,13 +155,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     itemCount: list.length,
                     itemBuilder: (BuildContext context, int index) {
                       return new Container(
-                        padding: new EdgeInsets.only(right: 13.0),
+                        padding: new EdgeInsets.only(right: 2.0),
                         child: Card(
-                          semanticContainer: true,
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          elevation: 5,
+                          // semanticContainer: true,
+                          // clipBehavior: Clip.antiAliasWithSaveLayer,
+                          // elevation: 5,
                           color: AppColors.kColorCard,
-                          margin: EdgeInsets.all(10),
+                          // margin: EdgeInsets.all(4),
                           child: ListTile(
                             onTap: () {
                               Navigator.push(
@@ -173,36 +173,34 @@ class _MyHomePageState extends State<MyHomePage> {
                                     if (value != null) {initialise()}
                                   });
                             },
-                            contentPadding:
-                                EdgeInsets.only(right: 30, left: 36),
+                            // contentPadding:
+                            //     EdgeInsets.only(right: 30, left: 36),
                             title: Container(
                               child: Text(
                                 list[index]['name'],
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 14,
                                   color: Colors.white,
                                 ),
                               ),
                             ),
-                            leading: Container(
-                                width: 70,
-                                // height: 70,
+                            leading: CircleAvatar(
+                                radius: 30,
+                                backgroundColor: Colors.transparent,
                                 child:
                                     Image.network(list[index]['urlImage'] ?? "",
                                         errorBuilder: (BuildContext context,
                                             Object exception,
                                             StackTrace stackTrace) {
-                                  return Image.asset(
-                                    'assets/logo.png',
-                                    // fit: BoxFit.cover,
-                                  );
+                                  return Image.asset('assets/logo.png',
+                                      fit: BoxFit.cover);
                                 })),
                             subtitle: Text(
                               list[index]['description'],
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                fontSize: 15,
+                                fontSize: 12,
                                 color: AppColors.kColorSubtitle,
                               ),
                             ),
